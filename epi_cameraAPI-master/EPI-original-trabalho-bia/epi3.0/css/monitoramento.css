@@ -1,0 +1,376 @@
+        /* ==========================================
+           TEMA CLARO - ESTILO APPLE (CLEAN & MINIMAL)
+           ========================================== */
+        
+        .meet-wrapper {
+            background-color: #f5f5f7; /* Fundo cinza super claro (padrão Apple) */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #1d1d1f; /* Texto escuro suave */
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: calc(100vh - 120px);
+            margin-top: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); /* Sombra difusa e suave */
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .meet-header-info {
+            height: 54px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 500;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5ea;
+        }
+
+        .meet-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #515154;
+        }
+
+        .meet-main {
+            flex: 1;
+            display: flex;
+            padding: 16px;
+            gap: 16px;
+            overflow: hidden;
+            background-color: #f5f5f7;
+            transition: all 0.3s ease;
+        }
+
+        /* Área de Vídeo */
+        .meet-presentation {
+            flex: 3;
+            background: #ffffff;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            transition: flex 0.4s ease;
+        }
+
+        .editor-header {
+            height: 40px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #86868b;
+            border-bottom: 1px solid #f0f0f2;
+        }
+
+        .editor-content {
+            flex: 1;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000; /* Fundo do vídeo se mantém preto para contraste da imagem */
+            overflow: hidden;
+        }
+
+        .editor-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Painel Lateral - Chat e Logs (Expandido) */
+        .meet-right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            transition: all 0.4s ease;
+        }
+
+        .chat-panel {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 20px;
+            color: #1d1d1f;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+        }
+
+        .chat-header {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-subtitle {
+            font-size: 12px;
+            color: #34c759; /* Verde estilo iOS */
+            font-weight: 500;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chat-subtitle::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #34c759;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(52, 199, 89, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
+        }
+
+        .chat-logs {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+        }
+
+        .chat-msg {
+            background: #f5f5f7;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #1d1d1f;
+            border: 1px solid #e5e5ea;
+        }
+
+        .msg-alert {
+            border-left: 4px solid #ff3b30; /* Vermelho alerta Apple */
+        }
+
+        /* Controles Inferiores */
+        .meet-footer {
+            height: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            background: #ffffff;
+            border-top: 1px solid #e5e5ea;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+
+        .meeting-details {
+            font-size: 15px;
+            font-weight: 500;
+            color: #515154;
+        }
+
+        .controls {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn-meet {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid #e5e5ea;
+            background: #ffffff;
+            color: #1d1d1f;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .btn-meet:hover {
+            background: #f5f5f7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        }
+
+        .btn-end {
+            background: #ff3b30; /* Vermelho vibrante */
+            color: white;
+            width: 72px;
+            border-radius: 24px;
+            border: none;
+        }
+
+        .btn-end:hover {
+            background: #d32f2f;
+        }
+
+        /* Ferramentas do lado direito do Footer */
+        .right-tools {
+            display: flex;
+            gap: 20px;
+            color: #515154;
+            align-items: center;
+        }
+
+        .right-tools i {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .right-tools i:hover {
+            color: #007aff; /* Azul Apple */
+        }
+
+        /* Menu de Opções de Layout (Dropdown) */
+        .layout-menu-container {
+            position: relative;
+        }
+        
+        
+        .layout-dropdown {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            padding: 8px;
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            border: 1px solid #e5e5ea;
+            z-index: 100;
+        }
+
+        .layout-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .layout-option {
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #1d1d1f;
+            cursor: pointer;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+        }
+
+        .layout-option:hover {
+            background: #f5f5f7;
+        }
+
+        .layout-option.selected {
+            color: #007aff;
+            font-weight: 500;
+            background: #f0f8ff;
+        }
+
+        /* Estilo Dinâmico via JS (Modo Expandido) */
+        .meet-wrapper.layout-expanded .meet-right-panel {
+            display: none; /* Esconde o log de sistema */
+        }
+        .meet-wrapper.layout-expanded .meet-presentation {
+            flex: 1; /* Câmera ocupa a tela toda */
+        }
+        /* ==========================================
+           CARDS DE INFRAÇÃO (COM SOMBRA FORTE)
+           ========================================== */
+        .chat-logs {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            overflow-y: auto;
+            padding-right: 5px; /* Espaço para a barra de rolagem */
+        }
+
+        /* Estilizando a barra de rolagem para ficar mais limpa */
+        .chat-logs::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-logs::-webkit-scrollbar-thumb {
+            background-color: #d1d1d6;
+            border-radius: 10px;
+        }
+
+        .infraction-card {
+            background: #ffffff;
+            border-left: 4px solid #ff3b30; /* Vermelho alerta */
+            /* SOMBRA FORTE SOLICITADA */
+            box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.4), 0 4px 12px -2px rgba(0, 0, 0, 0.3); 
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0; /* Impede que o card seja esmagado */
+            animation: dropIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .infraction-icon {
+            color: #ff3b30;
+            background: #ffe5e5;
+            padding: 8px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px -2px rgba(255, 59, 48, 0.3);
+        }
+
+        .infraction-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .infraction-title {
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 2px;
+            color: #1d1d1f;
+        }
+
+        .infraction-message {
+            font-size: 12px;
+            color: #515154;
+        }
+
+        .infraction-time {
+            font-size: 11px;
+            font-weight: 600;
+            color: #ff3b30;
+            margin-top: 4px;
+        }
+
+        @keyframes dropIn {
+            0% { transform: translateY(-20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }

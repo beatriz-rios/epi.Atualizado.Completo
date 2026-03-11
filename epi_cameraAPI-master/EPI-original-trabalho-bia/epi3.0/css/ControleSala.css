@@ -1,0 +1,755 @@
+        /* --- 1. VARIÁVEIS E RESET (Visual Novo - Igual Referência) --- */
+        :root {
+            --primary: #E30613;
+            /* Vermelho SENAI */
+            --primary-dark: #bf040f;
+            --primary-light: rgba(227, 6, 19, 0.1);
+            --secondary: #1F2937;
+            --text-main: #111827;
+            --text-muted: #64748B;
+
+            /* Fundo e Cards Novos */
+            --bg-body: #e6e8ec;
+            --bg-card: #ebebeb;
+            --bg-white: #ffffff;
+
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #e6ac48;
+            --repeat: #7C3AED;
+            /* Roxo para reincidentes */
+
+            /* Bordas e Raios */
+            --border: #CBD5E1;
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            color: var(--text-main);
+        }
+
+
+
+        /* --- 3. MAIN CONTENT & HEADER --- */
+        .main-content {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .page-title p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-export {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 1px solid var(--border);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--secondary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-export:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 4px 8px rgba(227, 6, 19, 0.15);
+        }
+
+        .btn-export svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Perfil */
+        .user-profile-trigger {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 50px;
+            border: 1px solid transparent;
+            transition: 0.2s;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .user-profile-trigger:hover {
+            border-color: var(--border);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info-mini {
+            text-align: right;
+        }
+
+        .user-name {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .user-role {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* Popup Instrutor */
+        .instructor-card {
+            position: absolute;
+            top: 90px;
+            right: 32px;
+            width: 320px;
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--border);
+            display: none;
+            z-index: 100;
+            animation: slideIn 0.2s ease;
+        }
+
+        .instructor-card.active {
+            display: block;
+        }
+
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .btn-close-card {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background: #f1f5f9;
+            border: none;
+            border-radius: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-close-card:hover {
+            background: #e2e8f0;
+            color: var(--secondary);
+        }
+
+        /* --- 4. ÁREA DE CONTEÚDO (TURMA) --- */
+
+        .dashboard-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* CARD PRINCIPAL (Estilo da Referência aplicado ao content-card) */
+        .content-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            /* Sombra forte e borda nítida da referência */
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            min-height: 500px;
+            /* Altura mínima para ficar bonito */
+        }
+
+        /* BARRA DE CONTROLES (Search e Filter) */
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: 0.2s;
+        }
+
+        .search-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .search-icon {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-right: 10px;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 12px 0;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .filter-select {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--text-main);
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .filter-select:hover {
+            border-color: var(--primary);
+        }
+
+        /* --- 5. GRID DE ALUNOS --- */
+        .student-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding-bottom: 20px;
+        }
+
+        /* CARD DE ALUNO (Estilo adaptado para "Mini Cards" dentro do painel) */
+        .student-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: fadeIn 0.4s ease forwards;
+            opacity: 0;
+            position: relative;
+            overflow: hidden;
+            /* Sombra leve inicial */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+
+
+        .student-card:hover {
+            transform: translateY(-4px);
+            /* Sombra forte no hover (Vibe da referência) */
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -5px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        /* Border Left colorido por status */
+        .student-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--border);
+            transition: 0.3s;
+        }
+
+        .student-card.is-risk::before {
+            background: var(--danger);
+        }
+
+        .student-card.is-repeat::before {
+            background: var(--repeat);
+        }
+
+        .student-card.is-history::before {
+            background: var(--warning);
+        }
+
+        .student-card:not(.is-risk):not(.is-repeat):not(.is-history)::before {
+            background: var(--success);
+        }
+
+        .card-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-placeholder {
+            width: 40px;
+            height: 40px;
+            background: #F1F5F9;
+            color: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .info-text h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+
+        .info-text span {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        /* Status Pills */
+        .status-pill {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-risk {
+            background: #FEF2F2;
+            color: var(--danger);
+            border: 1px solid #FCA5A5;
+        }
+
+        .status-repeat {
+            background: #F5F3FF;
+            color: var(--repeat);
+            border: 1px solid #C4B5FD;
+        }
+
+        .status-history {
+            background: #FFFBEB;
+            color: var(--warning);
+            border: 1px solid #FCD34D;
+        }
+
+        .status-ok {
+            background: #ECFDF5;
+            color: var(--success);
+            border: 1px solid #6EE7B7;
+        }
+
+        /* --- 6. MODAL (Visual Novo) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(31, 41, 55, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            /* Garante que fique acima de tudo */
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Usamos .active para mostrar o modal */
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+
+        .modal-title h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .modal-title p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--danger);
+            transform: rotate(90deg);
+        }
+
+        .epi-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .epi-item {
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .epi-item.missing {
+            background: #FEF2F2;
+            border-color: #FECACA;
+            color: #bb4848;
+            font-weight: 600;
+        }
+
+        .epi-item.ok {
+            background: #F8FAFC;
+            color: var(--text-muted);
+        }
+
+        .modal-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: #DC2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: #78350F;
+            box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-warning:hover {
+            filter: brightness(0.95);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--secondary);
+        }
+
+        .btn-primary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Transição de Página */
+        .page-exit {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* CSS Rápido para garantir funcionamento básico do modal e layout */
+        .modal-overlay {
+            display: none;
+            /* Oculto por padrão */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9fafb;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .instructor-card {
+            display: none;
+            position: absolute;
+            right: 20px;
+            top: 70px;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* Container dos botões no rodapé do modal */
+        /* Container dos botões no rodapé do modal */
+
+
+        /* Garante que ambos os botões ocupem a largura total */
+        /* BOTÃO VER INFRAÇÕES - VERSÃO AMPLIADA */
+        /* Estilo Base para AMBOS os botões (Garante tamanho igual) */
+        /* --- Estilos Base e Compartilhados --- */
+        .btn-view-infracoes,
+        .btn-open-occurrence {
+            width: 100%;
+            /* Mantém a largura total do container */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            /* Espaçamento uniforme entre o ícone e o texto */
+
+            /* Tamanho Reduzido e Elegante */
+            padding: 10px 16px;
+            /* Altura menor, mais delicado */
+            min-height: 42px;
+            /* Reduzido de 56px para um padrão mais moderno */
+            border-radius: 8px;
+            /* Arredondamento mais sutil (era 12px) */
+
+            /* Tipografia Corrigida e Padronizada */
+            font-size: 14px;
+            /* Fonte um pouco menor */
+            font-weight: 600;
+            /* Corrigido: usando peso 600 (Semibold) */
+            letter-spacing: 0.3px;
+            /* Espaçamento de letras mais suave */
+
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        /* Ícones Proporcionais */
+        .btn-view-infracoes i,
+        .btn-open-occurrence i,
+        .btn-view-infracoes svg,
+        .btn-open-occurrence svg {
+            width: 18px;
+            /* Ícones levemente menores para acompanhar o botão */
+            height: 18px;
+            stroke-width: 2px;
+            /* Traço mais limpo */
+        }
+
+        /* --- Estilos Individuais (Cores) --- */
+
+        /* 1. Botão Ver Infrações (Cinza Moderno) */
+        /* 1. Botão Ver Infrações (Cinza Moderno) */
+        .btn-view-infracoes {
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+
+            /* ADICIONE ESTA LINHA ABAIXO PARA O ESPAÇAMENTO */
+            margin-bottom: 12px;
+            /* Aumente para 16px ou 20px se quiser ainda mais espaço */
+        }
+
+        .btn-view-infracoes:hover {
+            background-color: #e2e8f0;
+            /* Fica um tom mais escuro ao passar o mouse */
+            color: #1e293b;
+            /* Texto mais forte */
+            transform: translateY(-1px);
+        }
+
+        /* 2. Botão Abrir Ocorrência (Vermelho Alerta) */
+        .btn-open-occurrence {
+            background-color: #ef4444;
+            color: white;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.15);
+            /* Sombra mais leve */
+        }
+
+        .btn-open-occurrence:hover {
+            background-color: #dc2626;
+            /* Vermelho um tom mais fechado no hover */
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(239, 68, 68, 0.25);
+        }
+
+        /* Fim das definições do Modal */
+        /* Ajuste do Modal Overlay para alinhar ao centro */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }

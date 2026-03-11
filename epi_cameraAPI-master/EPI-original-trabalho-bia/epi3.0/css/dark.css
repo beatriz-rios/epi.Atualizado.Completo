@@ -1,0 +1,244 @@
+/* =========================================================
+   ARQUIVO DO MODO ESCURO (Dark.css)
+   ========================================================= */
+
+/* 1. VARIÁVEIS DO MODO ESCURO */
+[data-theme="dark"] {
+    /* Cores de Destaque */
+    --primary: #E30613;
+    --primary-dark: #bf040f;
+    --primary-light: rgba(227, 6, 19, 0.15);
+
+    /* Textos (Cores claras para contrastar com fundo escuro) */
+    --secondary: #E5E7EB;
+    --text-main: #f9fafb;
+    --text-muted: #9ca3af;
+
+    /* Superfícies e Fundos (Tons escuros) */
+    --bg-body: #111827;
+    --bg-card: #1f2937;
+    --bg-white: #1f2937;
+
+    /* Bordas */
+    --border: #374151;
+}
+
+/* =========================================================
+   2. APLICAÇÃO GERAL NO MODO ESCURO (Garante a legibilidade)
+   ========================================================= */
+
+/* Fundo geral e textos base */
+[data-theme="dark"] body {
+    background-color: var(--bg-body) !important;
+    color: var(--text-main) !important;
+}
+
+/* Títulos, parágrafos e textos genéricos */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] a {
+    color: var(--text-main);
+}
+
+/* Cards de informação / painéis */
+[data-theme="dark"] .card,
+[data-theme="dark"] .violation-card,
+[data-theme="dark"] .student-card,
+[data-theme="dark"] .sidebar,
+[data-theme="dark"] .navbar {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border) !important;
+}
+
+/* =========================================================
+   3. FORÇANDO DARK MODE EM COMPONENTES ESPECÍFICOS
+   ========================================================= */
+
+/* Entradas de texto e selects genéricos */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border) !important;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: var(--text-muted) !important;
+}
+
+/* Filtros (Selects) específicos que você já tinha */
+[data-theme="dark"] .status-select:focus,
+[data-theme="dark"] select#statusFilter:focus {
+    border-color: var(--primary) !important;
+    outline: none !important;
+}
+
+[data-theme="dark"] .status-select option,
+[data-theme="dark"] select#statusFilter option {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+}
+
+/* Barra de Pesquisa */
+[data-theme="dark"] .search-wrapper,
+[data-theme="dark"] .search-wrapper-animated {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border) !important;
+}
+
+[data-theme="dark"] .search-wrapper input,
+[data-theme="dark"] .search-wrapper-animated input {
+    background-color: transparent !important;
+}
+
+/* Ícone de lupa da busca */
+[data-theme="dark"] .search-wrapper svg,
+[data-theme="dark"] .search-wrapper-animated svg {
+    color: var(--text-muted) !important;
+}
+
+/* Ajuste da notificação (Toast) para o modo escuro */
+[data-theme="dark"] .toast {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-left: 4px solid var(--primary);
+}
+
+
+[data-theme="dark"] .btn-export {
+    color: #111827;
+    border-color: #111827 2px solid;
+}
+
+[data-theme="dark"] .btn-export:hover {
+    color: #bf040f;
+}
+
+[data-theme="dark"] .user-name {
+    color: #111827;
+}
+
+[data-theme="dark"] .user-role {
+    color: #9ca3af;
+}
+
+[data-theme="dark"] .user-avatar {
+    color: #f9fafb;
+    background: #111827;
+}
+
+[data-theme="dark"] .instructor-card {
+    background-color: var(--border);
+}
+
+[data-theme="dark"] .btn-close-card:hover {
+    color: var(--primary);
+    border-color: var(--primary) solid;
+}
+
+[data-theme="dark"] .status-badge.status-critico {
+    color: #c0000d;
+}
+
+[data-theme="dark"] .modal-ranking-square {
+    background-color: #1f2937;
+}
+
+[data-theme="dark"] .modal-ranking-header {
+    background-color: #1f2937;
+}
+
+[data-theme="dark"] .ranking-table th {
+    background-color: #1f2937;
+}
+
+[data-theme="dark"] .ranking-table td {
+    background-color: #1f2937;
+}
+
+[data-theme="dark"] .ranking-table tr {
+    background-color: #1f2937;
+}
+
+[data-theme="dark"] .ranking-row:hover {
+    color: var(--bg-body);
+}
+
+[data-theme="dark"] .badge-count {
+    color: #bf040f;
+    background-color: #f3d4d7;
+}
+
+[data-theme="dark"] .progress-fill {
+    background: #bf040f;
+}
+
+[data-theme="dark"] .calendar-nav {
+    background: #1f2937;
+    color: #f9fafb;
+    border-color: #a4a7ac solid;
+}
+
+[data-theme="dark"] .nav-btn {
+    background: #1f2937;
+    color: #f9fafb;
+}
+
+[data-theme="dark"] .occ-avatar {
+    background: #E5E7EB;
+    color: #1f2937;
+}
+
+[data-theme="dark"] .modal-content {
+    background: #1f2937;
+    color: #E5E7EB;
+}
+
+[data-theme="dark"] .modal-header {
+    background: #1f2937;
+    color: #E5E7EB;
+}
+
+[data-theme="dark"] .meet-header-info {
+    background: #1f2937;
+}
+
+[data-theme="dark"] .meet-main {
+    color: #f8f8f8;
+    background-color: #1f2937;
+}
+
+[data-theme="dark"] .chat-panel {
+    color: #000000;
+    background-color: #ffffff;
+}
+
+[data-theme="dark"] .meet-footer {
+    color: #f8f8f8;
+    background-color: #1f2937;
+}
+
+[data-theme="dark"] .meeting-details {
+    color: #f8f8f8;
+}
+
+[data-theme="dark"] .meet-user-info {
+    color: #f8f8f8;
+}
+
+[data-theme="dark"] .right-tools {
+    color: #f8f8f8;
+}
+
+[data-theme="dark"] .violation-tag {
+    color: #f50808;
+}

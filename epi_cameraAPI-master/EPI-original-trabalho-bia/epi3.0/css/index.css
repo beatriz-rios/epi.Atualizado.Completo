@@ -1,0 +1,150 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(120deg, #f8fafc, #e5e7eb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Container */
+.login-container {
+    animation: fadeIn 0.8s ease;
+}
+
+/* Caixa */
+.login-box {
+    background: #ffffff;
+    padding: 42px;
+    width: 340px;
+    border-radius: 14px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+    text-align: center;
+}
+
+/* Título */
+.login-box h1 {
+    color: #E30613;
+    margin-bottom: 6px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.login-box p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 30px;
+}
+
+/* Inputs */
+.input-group {
+    text-align: left;
+    margin-bottom: 22px;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #374151;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 11px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #E30613;
+    box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.15);
+}
+
+/* Botão */
+button {
+    width: 100%;
+    padding: 13px;
+    background: #E30613;
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #c20510;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(227, 6, 19, 0.35);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 12px rgba(227, 6, 19, 0.25);
+}
+
+/* Animação */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+a {
+    font-style: none;
+    color: white;
+    text-decoration: none;
+
+}
+
+/* --- MANTENHA O SEU 'body' COMO ESTÁ --- */
+
+/* Adicione apenas isto para a SAÍDA (Slide para a Esquerda) */
+body.page-exit {
+    /* Sobrescreve a animação de entrada e inicia a de saída */
+    animation: pageSlideOut 0.4s cubic-bezier(0.5, 0, 0.1, 1) forwards;
+    pointer-events: none;
+    /* Bloqueia cliques durante a saída */
+}
+
+@keyframes pageSlideOut {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-80px);
+        /* Desliza para a esquerda */
+    }
+}
+ .login-container {
+            transition: transform 0.4s ease, opacity 0.6s ease;
+        }
+
+        .login-container.slide-up {
+            transform: translateY(-100vh);
+            opacity: 0;
+        }
+
+        .erro {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+        }

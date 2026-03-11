@@ -1,0 +1,251 @@
+/* =========================================
+   Sidebar - Estilo Geral Unificado
+   ========================================= */
+:root {
+    --primary: #E30613;
+    --primary-dark: #bf040f;
+    --primary-light: rgba(227, 6, 19, 0.1);
+    --secondary: #1F2937;
+    --text-main: #111827;
+    --text-muted: #64748B;
+    --bg-body: #e6e8ec;
+    --bg-card: #ebebeb;
+    --border: #CBD5E1;
+    --success: #10B981;
+    --danger: #EF4444;
+    --radius: 16px;
+}
+
+.sidebar {
+    width: 260px;
+    background: var(--bg-card);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border);
+    flex-shrink: 0;
+    z-index: 1000;
+    box-shadow: 4px 0 15px -5px rgba(0, 0, 0, 0.1);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--secondary);
+    margin-bottom: 40px;
+}
+
+.brand span {
+    color: var(--primary);
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--text-muted) !important;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    /* Removida animação de hover conforme solicitado */
+    transition: none !important;
+    opacity: 1 !important;
+}
+
+.nav-item:hover {
+    background: rgba(227, 6, 19, 0.08) !important;
+    color: var(--primary) !important;
+}
+
+.nav-item.active {
+    background: rgba(227, 6, 19, 0.18) !important;
+    color: var(--primary) !important;
+    font-weight: 700 !important;
+    border-right: 4px solid var(--primary) !important;
+    border-radius: 8px 0px 0px 8px !important;
+}
+
+.nav-item.active i,
+.nav-item.active svg {
+    stroke-width: 2.5px !important;
+}
+
+
+
+.nav-active-indicator.ready {
+    opacity: 1;
+}
+
+/* =========================================
+   Header & Ações
+   ========================================= */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-header-action {
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    padding: 0;
+    text-decoration: none;
+}
+
+.btn-header-action:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--primary);
+    transform: translateY(-1px);
+}
+
+.btn-header-action svg,
+.btn-header-action i {
+    width: 22px;
+    height: 22px;
+}
+
+.notif-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: var(--primary);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 99px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+/* =========================================
+   Toast Notifications
+   ========================================= */
+#toast-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.toast {
+    background: white;
+    border-left: 4px solid var(--primary);
+    padding: 14px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 320px;
+    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.95);
+    animation: toast-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toast:hover {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    background: #ffffff;
+}
+
+.toast-icon {
+    background: var(--primary-light);
+    color: var(--primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    animation: pulse-icon 2s infinite;
+}
+
+@keyframes pulse-icon {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.toast-content {
+    flex: 1;
+}
+
+.toast-title {
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--secondary);
+    margin-bottom: 2px;
+}
+
+.toast-msg {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+@keyframes toast-in {
+    from {
+        transform: translateX(100%) translateY(-20px) scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0) translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.toast-out {
+    animation: toast-out 0.4s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+@keyframes toast-out {
+    to {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+}
