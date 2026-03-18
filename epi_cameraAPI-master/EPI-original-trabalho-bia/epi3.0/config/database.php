@@ -5,7 +5,7 @@ $host = "localhost";
 $db = "epi_guard";
 $user = "root";
 $pass = "";
-$port = 3308;
+$port = 3306;
 
 
 // Cria a conexão usando MySQLi (Mais leve que PDO)

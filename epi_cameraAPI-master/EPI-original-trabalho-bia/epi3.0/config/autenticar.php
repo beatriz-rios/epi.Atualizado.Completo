@@ -14,7 +14,7 @@ if (empty($usuario) || empty($senha)) {
 }
 
 // Busca o usuário no banco usando MySQLi
-$sql = "SELECT id, nome, usuario, senha, cargo, id_curso 
+$sql = "SELECT id, nome, usuario, senha, cargo
         FROM usuarios 
         WHERE usuario = ? 
         LIMIT 1";
