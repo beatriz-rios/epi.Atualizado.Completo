@@ -227,6 +227,7 @@ def capturar_frames():
     while True:
         if camera_ativa:
             if cap is None:
+                # SE A CÂMERA USB NÃO ABRIR, TROQUE O 0 ABAIXO POR 1
                 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
                 cap.set(3, 1280)
                 cap.set(4, 720)
@@ -549,22 +550,77 @@ def ligar_camera():
 @app.route('/desligar')
 def desligar_camera():
     global camera_ativa, frame_atual, tempo_infracao
-    camera_ativa = False
+    camera_ativa = True
     with lock_frame:
         frame_atual = None
     tempo_infracao.clear()
     return {"status": "Desligado"}
 
+# ==============================================================================
+# 6. NOVA FUNÇÃO DE EXIBIÇÃO LOCAL (APLICATIVO WINDOWS)
+# ==============================================================================
+def exibir_tela_local():
+    cv2.namedWindow("Camera EPI Guard", cv2.WINDOW_NORMAL)
+    while True:
+        if frame_atual is None:
+            time.sleep(0.01)
+            continue
+
+        with lock_frame:
+            frame_display = frame_atual.copy()
+
+        # --- Copiando os desenhos do reconhecimento ---
+        for (hx1, hy1, hx2, hy2) in ultimo_desenho_capacetes:
+            cv2.rectangle(frame_display, (hx1, hy1), (hx2, hy2), (0, 255, 0), 2)
+        for (ox1, oy1, ox2, oy2) in ultimo_desenho_oculos:
+            cv2.rectangle(frame_display, (ox1, oy1), (ox2, oy2), (0, 255, 0), 2)
+            cv2.putText(frame_display, "EPI OK", (ox1, oy1-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        for (ox1, oy1, ox2, oy2) in ultimo_desenho_oculos_vermelho:
+            cv2.rectangle(frame_display, (ox1, oy1), (ox2, oy2), (0, 0, 255), 2)
+            cv2.putText(frame_display, "COMUM", (ox1, oy2+15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+        for (bx1, by1, bx2, by2) in ultimo_desenho_blusoes:
+            cv2.rectangle(frame_display, (bx1, by1), (bx2, by2), (0, 255, 0), 2)
+            cv2.putText(frame_display, "BLUSAO", (bx1, by1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        for (ax1, ay1, ax2, ay2) in ultimo_desenho_aventais:
+            cv2.rectangle(frame_display, (ax1, ay1), (ax2, ay2), (0, 255, 0), 2)
+            cv2.putText(frame_display, "AVENTAL", (ax1, ay1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        for (lx1, ly1, lx2, ly2) in ultimo_desenho_luvas:
+            cv2.rectangle(frame_display, (lx1, ly1), (lx2, ly2), (0, 255, 0), 2)
+            cv2.putText(frame_display, "LUVA", (lx1, ly1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        if foco_bbox is not None:
+            px1, py1, px2, py2 = foco_bbox
+            cv2.rectangle(frame_display, (px1, py1), (px2, py2), foco_cor, 2)
+            cv2.putText(frame_display, f"{foco_nome} | {foco_status}", (px1, py1-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, foco_cor, 2)
+
+        # --- Exibe a janela no Windows ---
+        cv2.imshow("Camera EPI Guard", frame_display)
+        
+        # Aperte a tecla 'q' com a tela do vídeo selecionada para fechar o programa
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+            
+    # Força todos os processos a fecharem quando a tela de vídeo é fechada
+    os._exit(0)
 
 if __name__ == '__main__':
     inicializar_banco()
     treinar_modelo()
 
+    # 1. Força a câmera a ligar automaticamente sem precisar do comando web
+    camera_ativa = True
+
+    # 2. Inicia as lógicas da câmera e Inteligência Artificial em segundo plano
     threading.Thread(target=capturar_frames, daemon=True).start()
     threading.Thread(target=processar_ia, daemon=True).start()
 
     print("-----------------------------------------")
-    print("SERVIDOR EPI GUARD + RECONHECIMENTO FACIAL")
-    print("RODANDO EM HTTP://LOCALHOST:5000")
+    print("SISTEMA EPI GUARD INICIADO")
+    print("A CAMERA ABRIRA EM UMA NOVA JANELA!")
+    print("Para fechar, clique na tela do video e aperte a tecla 'Q'")
     print("-----------------------------------------")
-    app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
+    
+    # 3. Joga o servidor Flask para rodar quieto em segundo plano
+    threading.Thread(target=lambda: app.run(host='0.0.0.0', port=5001, debug=False, use_reloader=False), daemon=True).start()
+
+    # 4. Chama a função que abre e mantém a tela de vídeo aberta no Windows
+    exibir_tela_local()
