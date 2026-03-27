@@ -366,11 +366,17 @@ require_once __DIR__ . '/../config/auth.php';
 
             // 1. Se clicou no botão da IA que já está ligada -> Desliga tudo
             if (cameraAtual === tipo) {
-                await fetch(urlDestino + '/desligar').catch(() => {});
-                cameraAtual = null;
+                statusBox.style.display = "flex";
+                statusTitle.innerText = "Desligando...";
+                statusDesc.innerText = "Finalizando servidor Python...";
                 cameraFeed.src = "";
                 cameraFeed.style.opacity = "0";
-                statusBox.style.display = "flex";
+
+                // Desliga a câmera no Flask e depois mata o processo Python
+                await fetch(urlDestino + '/desligar').catch(() => {});
+                await fetch('api_python.php?acao=parar&tipo=' + tipo).catch(() => {});
+
+                cameraAtual = null;
                 statusTitle.innerText = "Câmera Desligada";
                 statusDesc.innerText = "Selecione uma IA abaixo para iniciar.";
                 statusIcon.setAttribute('data-lucide', 'video-off');
@@ -380,29 +386,78 @@ require_once __DIR__ . '/../config/auth.php';
                 if (cameraAtual) {
                     const urlAntiga = cameraAtual === 'epi' ? urlEpi : urlFacial;
                     await fetch(urlAntiga + '/desligar').catch(() => {});
-                    await new Promise(r => setTimeout(r, 500));
+                    await fetch('api_python.php?acao=parar&tipo=' + cameraAtual).catch(() => {});
+                    await new Promise(r => setTimeout(r, 1500));
                 }
 
                 // 3. Interface de Loading
                 statusBox.style.display = "flex";
                 statusTitle.innerText = "Iniciando IA...";
-                statusDesc.innerText = `Aguarde, conectando ao servidor ${tipo.toUpperCase()}...`;
+                statusDesc.innerText = `Iniciando servidor Python ${tipo.toUpperCase()}...`;
+                statusIcon.setAttribute('data-lucide', 'loader');
                 cameraFeed.style.opacity = "0";
+                cameraFeed.src = "";
                 resetBotoes();
+                lucide.createIcons();
 
-                // 4. Ligar a nova câmera
+                // 4. Iniciar o processo Python via PHP
+                try {
+                    const resp = await fetch('api_python.php?acao=iniciar&tipo=' + tipo);
+                    const data = await resp.json();
+                    if (data.status === 'ja_rodando') {
+                        statusDesc.innerText = `Servidor ${tipo.toUpperCase()} já estava ativo. Conectando...`;
+                    } else {
+                        statusDesc.innerText = `Processo Python iniciado. Carregando modelos de IA...`;
+                    }
+                } catch (e) {
+                    statusTitle.innerText = "Erro";
+                    statusDesc.innerText = "Falha ao comunicar com api_python.php. Verifique se o Apache está rodando.";
+                    statusIcon.setAttribute('data-lucide', 'alert-circle');
+                    lucide.createIcons();
+                    return;
+                }
+
+                // 5. Aguardar o servidor Python inicializar (polling com timeout de 45s)
+                let pronto = false;
+                for (let i = 0; i < 45; i++) {
+                    try {
+                        const controller = new AbortController();
+                        const timer = setTimeout(() => controller.abort(), 2000);
+                        const res = await fetch(urlDestino + '/status_ia', { signal: controller.signal });
+                        clearTimeout(timer);
+                        if (res.ok) {
+                            pronto = true;
+                            break;
+                        }
+                    } catch (e) {}
+                    statusDesc.innerText = `Aguardando servidor ${tipo.toUpperCase()}... (${i + 1}s)`;
+                    await new Promise(r => setTimeout(r, 1000));
+                }
+
+                if (!pronto) {
+                    statusTitle.innerText = "Erro de Conexão";
+                    statusDesc.innerText = "Não foi possível conectar ao servidor Python. Tente novamente.";
+                    statusIcon.setAttribute('data-lucide', 'alert-circle');
+                    lucide.createIcons();
+                    // Tenta matar o processo que pode ter travado
+                    await fetch('api_python.php?acao=parar&tipo=' + tipo).catch(() => {});
+                    return;
+                }
+
+                // 6. Ligar a câmera no servidor Python
                 await fetch(urlDestino + '/ligar').catch(() => {});
 
-                // Espera um pouco mais para o OpenCV inicializar o driver
+                // Espera o OpenCV inicializar o driver da câmera
+                statusDesc.innerText = "Inicializando câmera...";
                 await new Promise(r => setTimeout(r, 2000));
 
-                // 5. Ativar Feed
+                // 7. Ativar Feed
                 cameraAtual = tipo;
                 cameraFeed.src = urlDestino + "/video_feed?t=" + Date.now();
                 cameraFeed.style.opacity = "1";
                 statusBox.style.display = "none";
 
-                // 6. Atualizar Estilo Botão
+                // 8. Atualizar Estilo Botão
                 const btnEpi = document.getElementById('btn-camera-epi');
                 const btnFacial = document.getElementById('btn-camera-facial');
                 if (tipo === 'epi') {

@@ -20,7 +20,7 @@ DB_CONFIG = {
     'user': 'root',
     'password': '',       # Confirme sua senha
     'database': 'epi_guard',
-    'port': 3308
+    'port': 3306
 }
 
 EPI_OCULOS_ID = 1
